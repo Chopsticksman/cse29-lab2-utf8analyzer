@@ -69,6 +69,7 @@ void upper_case(char input[])
     
 void utf8(char str[]) {
 	p1(str);
+	upper_case(str);
 	p3(str);
 	p4(str);
 	p6(str);
