@@ -19,10 +19,7 @@ void upper_case(char input[])
 	{
 		input[i] -= 32;
 	}
-	else
-	{
-
-return input[];    
+	}}    
     
     
     
