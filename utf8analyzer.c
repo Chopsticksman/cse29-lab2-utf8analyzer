@@ -142,7 +142,7 @@ void utf8(char str[]) {
 	}
 	puts(" ");
 	p6(str);
-
+	p7(str);
 	// p8
 	char strbuf[1024];
 	printf("Animal Emojis:");
@@ -199,4 +199,43 @@ void p6(char str[]) {
 		}
 	}
 	printf("\n");
+	
+}
+
+void p7(char str[])
+{
+	uint32_t buf[1024];
+	int size = decode_utf8(str, buf);
+	int byte_count = 0;
+	char substring[1024];
+	int i,j;
+	
+	for (i = 0; i < size && i < 6; i++)
+	{
+		int codepoint = buf[i];
+		int byte_len = 0;
+
+		if (codepoint <= 0x7F)
+		{
+			byte_len = 1;
+		}
+		else if (codepoint <= 0xFFFF)
+		{
+			byte_len = 3;
+		}
+		else if (codepoint <= 0x10FFFF)
+		{
+			byte_len = 4;
+		}
+
+		for (j = byte_count; j < byte_count + byte_len; j++)
+		{
+			substring[j - byte_count] = str[j];
+		}
+
+		byte_count += byte_len;
+	}
+	substring[byte_count] = '\0';
+
+	printf("Substring of the first 6 code points: %s\n", substring);
 }
