@@ -63,7 +63,49 @@ int is_animal_emoji_at(const char str[], int index){
 	return 0;
 }
 
+uint32_t encode_utf8(uint32_t num) {
+	//TODO: Complete this function
+	int size = 0;
+	uint32_t header;
+	if(0 <= num && num <= 127) {
+		return num;
+	} else if (num <= 0x0fff) { // 2 bytes
+		size = 2;
+		header = 0xc0;
+	} else if (num <= 0xffff) { // 3 bytes
+		size = 3;
+		header = 0xe0;
+	} else if (num <= 0x1fffff) { // 4 bytes
+		size = 4;
+		header = 0xf0;
+	} else {
+		puts("Size error");
+		return;
+	}
 
+	uint32_t mask = 0x3f;
+	mask = mask << (6 * (size - 1));
+
+	uint32_t byte = num & mask;
+	//printf("Before masking: 0x%x, After masking: 0x%x\n", num, byte);
+
+	//printf("Header: 0x%x\n", header);
+	byte = byte >> (6 * (size - 1));
+	byte = byte | header;
+
+	uint32_t result = byte;
+	header = 0x80;
+	for(int i = 1; i < size; i++) {
+		mask = mask >> 6;
+		byte = num & mask;
+
+		byte = byte >> (6 * (size - 1 - i));
+		byte = byte | header;
+		result = (result << 8);
+		result = result | byte;
+	}
+	return result;
+}
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
@@ -101,6 +143,18 @@ void utf8(char str[]) {
 	puts(" ");
 	p6(str);
 	p9(str);
+	p7(str);
+	// p8
+	char strbuf[1024];
+	printf("Animal Emojis:");
+	for(int i = 0; i < size; i++) {
+		if(is_animal_emoji_at(str, i)) {
+			char animal[1024];
+			animal[0] = encode_utf8(buf[i]);
+			printf(" %s", animal);
+		}
+	}
+	puts("");
 }
 
 void p1(char str[]) {
@@ -146,6 +200,45 @@ void p6(char str[]) {
 		}
 	}
 	printf("\n");
+	
+}
+
+void p7(char str[])
+{
+	uint32_t buf[1024];
+	int size = decode_utf8(str, buf);
+	int byte_count = 0;
+	char substring[1024];
+	int i,j;
+	
+	for (i = 0; i < size && i < 6; i++)
+	{
+		int codepoint = buf[i];
+		int byte_len = 0;
+
+		if (codepoint <= 0x7F)
+		{
+			byte_len = 1;
+		}
+		else if (codepoint <= 0xFFFF)
+		{
+			byte_len = 3;
+		}
+		else if (codepoint <= 0x10FFFF)
+		{
+			byte_len = 4;
+		}
+
+		for (j = byte_count; j < byte_count + byte_len; j++)
+		{
+			substring[j - byte_count] = str[j];
+		}
+
+		byte_count += byte_len;
+	}
+	substring[byte_count] = '\0';
+
+	printf("Substring of the first 6 code points: %s\n", substring);
 }
 
 void p9(char str[]) {
