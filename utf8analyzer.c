@@ -51,6 +51,19 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "Usage: utf8analyzer \"<UTF-8 encoded string>\"\n");
         return 1;
     }
+    utf8(argv[1]);
+}
 
-    // implement the UTF-8 analyzer here
+void utf8(char str[]) {
+	p1(str);
+}
+
+void p1(char str[]) {
+	for (int i = 0; i < strlen(str); i++) {
+		if (str[i] >> 7 != 0) {
+			printf("Valid ASCII: False\n");
+			return;
+		}
+	}
+	printf("Valid ASCII: True\n");
 }
