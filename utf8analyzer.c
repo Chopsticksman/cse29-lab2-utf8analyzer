@@ -57,6 +57,8 @@ int main(int argc, char *argv[]) {
 void utf8(char str[]) {
 	p1(str);
 	p3(str);
+	p4(str);
+	p6(str);
 }
 
 void p1(char str[]) {
@@ -71,4 +73,35 @@ void p1(char str[]) {
 
 void p3(char str[]) {
 	printf("Length in bytes: %lu\n", strlen(str));
+}
+
+void p4(char str[]) {
+	int32_t sum = 0;
+        for (int i = 0; i < strlen(str); i++) {
+                if ((str[i] >> 6) != -2) {
+                        sum++;
+                }
+        }
+        printf("Number of code points: %d\n", sum);
+}
+
+void p6(char str[]) {
+	printf("Bytes per code point: ");
+	for (int i = 0; i < strlen(str); i++) {
+		if (str[i] >> 7 == 0) {
+			printf("1 ");
+		} else if (str[i] >> 5 == -2) {
+			printf("2 ");
+			i++;
+		} else if (str[i] >> 4 == -2) {
+			printf("3 ");
+			i += 2;
+		} else if (str[i] >> 3 == -2) {
+			printf("4 ");
+			i += 3;
+		} else {
+			printf("-1 ");
+		}
+	}
+	printf("\n");
 }
