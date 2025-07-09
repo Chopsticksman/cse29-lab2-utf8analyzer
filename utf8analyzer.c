@@ -43,8 +43,27 @@ int decode_utf8(const char str[], uint32_t buf[]) {
         }
         points++;
     }
-    return 1;
+    return points;
 }
+
+int is_animal_emoji_at(const char str[], int index){
+	uint32_t buf[1024];
+	uint32_t s;
+	if (decode_utf8(str, buf)) {
+		s = buf[index];
+	} else {
+		puts("Buffer error");
+		return -1;
+	}
+	//printf("Hex: 0x%x\n", s);
+	if((0x1f400 <= s && s <= 0x1f43f) ||
+			(0x1f980 <= s && s <= 0x1f9ae)) {
+		return 1;
+	}
+	return 0;
+}
+
+
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
@@ -57,6 +76,15 @@ int main(int argc, char *argv[]) {
 void utf8(char str[]) {
 	p1(str);
 	p3(str);
+
+	// p5
+	uint32_t buf[1024];
+	int size = decode_utf8(str, buf);
+	printf("Code points as decimal numbers:");
+	for(int i = 0; i < size; i++) {
+		printf(" %d", buf[i]);
+	}
+	puts(" ");
 }
 
 void p1(char str[]) {
