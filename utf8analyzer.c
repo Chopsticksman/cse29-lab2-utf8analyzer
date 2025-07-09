@@ -100,6 +100,7 @@ void utf8(char str[]) {
 	}
 	puts(" ");
 	p6(str);
+	p9(str);
 }
 
 void p1(char str[]) {
@@ -145,4 +146,8 @@ void p6(char str[]) {
 		}
 	}
 	printf("\n");
+}
+
+void p9(char str[]) {
+	
 }
