@@ -54,6 +54,21 @@ int main(int argc, char *argv[]) {
     utf8(argv[1]);
 }
 
+<<<<<<< HEAD
+    
+void upper_case(char input[])
+{
+	for (int i = 0; input[i] != '\0'; i++)
+	{
+		if (input[i] >= 'a' && input[i] <= 'z')
+		{
+			input[i] -= 32;
+		}
+	}
+	printf("Uppercased ASCII: %s\n", input);
+}    
+    
+=======
 void utf8(char str[]) {
 	p1(str);
 	p3(str);
@@ -73,6 +88,7 @@ void p1(char str[]) {
 
 void p3(char str[]) {
 	printf("Length in bytes: %lu\n", strlen(str));
+>>>>>>> 0c38d01f61fbbddd987ee15a4b5b2bf1cd34137f
 }
 
 void p4(char str[]) {
