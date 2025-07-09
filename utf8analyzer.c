@@ -14,6 +14,7 @@ int main(int argc, char *argv[]) {
 
 void utf8(char str[]) {
 	p1(str);
+	p3(str);
 }
 
 void p1(char str[]) {
@@ -24,4 +25,8 @@ void p1(char str[]) {
 		}
 	}
 	printf("Valid ASCII: True\n");
+}
+
+void p3(char str[]) {
+	printf("Length in bytes: %lu\n", strlen(str));
 }
