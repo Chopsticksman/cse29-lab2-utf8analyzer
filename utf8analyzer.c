@@ -122,6 +122,7 @@ void upper_case(char input[])
 	{
 		if (input[i] >= 'a' && input[i] <= 'z')
 		{
+			char holder[i] = input[i];
 			input[i] -= 32;
 		}
 	}
@@ -212,7 +213,7 @@ void p7(char str[])
 	uint32_t buf[1024];
 	int size = decode_utf8(str, buf);
 	int byte_count = 0;
-	char substring[1024];
+	char substring[1024] = {0};
 	int i;
 	
 	for (i = 0; i < size && i < 6; i++)
