@@ -251,7 +251,3 @@ void p7(char str[])
 
 	printf("Substring of the first 6 code points: %s\n", substring);
 }
-
-void p9(char str[]) {
-	
-}
