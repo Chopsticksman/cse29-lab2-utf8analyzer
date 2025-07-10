@@ -63,12 +63,13 @@ int is_animal_emoji_at(const char str[], int index){
 	return 0;
 }
 
-uint32_t encode_utf8(uint32_t num) {
+void encode_utf8(uint32_t num, char dest[]) {
 	//TODO: Complete this function
 	int size = 0;
 	uint32_t header;
 	if(0 <= num && num <= 127) {
-		return num;
+		dest[0] = num;
+		return;
 	} else if (num <= 0x0fff) { // 2 bytes
 		size = 2;
 		header = 0xc0;
@@ -93,7 +94,8 @@ uint32_t encode_utf8(uint32_t num) {
 	byte = byte >> (6 * (size - 1));
 	byte = byte | header;
 
-	uint32_t result = byte;
+	dest[0] = byte;
+
 	header = 0x80;
 	for(int i = 1; i < size; i++) {
 		mask = mask >> 6;
@@ -101,10 +103,8 @@ uint32_t encode_utf8(uint32_t num) {
 
 		byte = byte >> (6 * (size - 1 - i));
 		byte = byte | header;
-		result = (result << 8);
-		result = result | byte;
+		dest[i] = byte;
 	}
-	return result;
 }
 
 int main(int argc, char *argv[]) {
@@ -149,11 +149,11 @@ void utf8(char str[]) {
 	for(int i = 0; i < size; i++) {
 		if(is_animal_emoji_at(str, i)) {
 			char animal[1024];
-			animal[0] = encode_utf8(buf[i]);
+			encode_utf8(buf[i], animal);
 			printf(" %s", animal);
 		}
 	}
-	puts("");
+	puts(" ");
 }
 
 void p1(char str[]) {
