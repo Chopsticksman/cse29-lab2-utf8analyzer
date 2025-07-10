@@ -69,6 +69,7 @@ void encode_utf8(uint32_t num, char dest[]) {
 	uint32_t header;
 	if(0 <= num && num <= 127) {
 		dest[0] = num;
+		dest[1] = 0;
 		return;
 	} else if (num <= 0x0fff) { // 2 bytes
 		size = 2;
@@ -105,6 +106,7 @@ void encode_utf8(uint32_t num, char dest[]) {
 		byte = byte | header;
 		dest[i] = byte;
 	}
+	dest[size] = 0;
 }
 
 int main(int argc, char *argv[]) {
@@ -144,7 +146,6 @@ void utf8(char str[]) {
 	}
 	puts(" ");
 	p6(str);
-	p9(str);
 	p7(str);
 	// p8
 	char strbuf[1024];
@@ -252,6 +253,3 @@ void p7(char str[])
 	printf("Substring of the first 6 code points: %s\n", substring);
 }
 
-void p9(char str[]) {
-	
-}
