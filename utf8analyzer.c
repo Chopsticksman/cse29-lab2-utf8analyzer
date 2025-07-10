@@ -142,6 +142,7 @@ void utf8(char str[]) {
 	}
 	puts(" ");
 	p6(str);
+	p9(str);
 	p7(str);
 	// p8
 	char strbuf[1024];
@@ -238,4 +239,8 @@ void p7(char str[])
 	substring[byte_count] = '\0';
 
 	printf("Substring of the first 6 code points: %s\n", substring);
+}
+
+void p9(char str[]) {
+	
 }
