@@ -155,6 +155,10 @@ void utf8(char str[]) {
 		}
 	}
 	puts(" ");
+	// p9
+	char index3up1[1024];
+	encode_utf8(buf[2] + 1, index3up1);
+	printf("Next character of Codepoint at index 3: %s\n", index3up1);
 }
 
 void p1(char str[]) {
