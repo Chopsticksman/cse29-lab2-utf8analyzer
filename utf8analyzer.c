@@ -118,12 +118,13 @@ int main(int argc, char *argv[]) {
     
 void upper_case(char input[])
 {
+	char holder[1024];
 	for (int i = 0; input[i] != '\0'; i++)
 	{
 		if (input[i] >= 'a' && input[i] <= 'z')
 		{
-			char holder[i] = input[i];
-			input[i] -= 32;
+			holder[i] = input[i];
+			holder[i] -= 32;
 		}
 	}
 	printf("Uppercased ASCII: %s\n", input);
