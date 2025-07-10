@@ -159,25 +159,33 @@ void p7(char str[])
 	
 	for (i = 0; i < size && i < 6; i++)
 	{
-		int codepoint = buf[i];
-		int byte_len = 0;
+		uint32_t cp = buf[i];
+		int byte_len;
 
-		if (codepoint <= 0x7F)
+		if (cp <= 0x7F)
 		{
 			byte_len = 1;
 		}
-		else if (codepoint <= 0xFFFF)
+		else if (cp <= 0x7FF)
+		{
+			byte_len = 2;
+		}
+		else if (cp <= 0xFFFF)
 		{
 			byte_len = 3;
 		}
-		else if (codepoint <= 0x10FFFF)
+		else if (cp <= 0x10FFFF)
 		{
 			byte_len = 4;
 		}
-
-		for (j = byte_count; j < byte_count + byte_len; j++)
+		else
 		{
-			substring[j - byte_count] = str[j];
+			break;
+		}
+
+		for (j = 0; j < byte_count; j++)
+		{
+			substring[j + byte_count] = str[j + byte_count];
 		}
 
 		byte_count += byte_len;
